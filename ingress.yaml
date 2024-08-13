@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: central-ingress
+  namespace: default
+spec:
+  rules:
+  - host: wakapi.tulkdan.dev
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: wakapi-nodeport
+              port:
+                number: 3000
+  - host: glance.tulkdan.dev
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: glance-nodeport
+              port:
+                number: 8080
