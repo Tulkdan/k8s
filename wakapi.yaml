@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wakapi-secret
+type: Opaque
+data:
+  salt: VU8zbU1IQW5OcjUwc3piUjdBM2djbm1XY05OUHRKMDkK
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wakapi-pv-claim
+  namespace: default
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wakapi
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wakapi
+  template:
+    metadata:
+      labels:
+        app: wakapi
+    spec:
+      containers:
+        - name: wakapi
+          image: ghcr.io/muety/wakapi:2.11.2@sha256:1022fb50f8e02b73521352ccf6a7616302dc7989a0865c08c1cc0bcaf923a5c9
+          env:
+            - name: WAKAPI_PASSWORD_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: wakapi-secret
+                  key: salt
+          ports:
+            - containerPort: 3000
+              name: wakapi-port
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data
+              name: wakapi-data
+      volumes:
+        - name: wakapi-data
+          persistentVolumeClaim:
+            claimName: wakapi-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wakapi-nodeport
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: wakapi
+  ports:
+    - name: wakapi-port
+      port: 3000
