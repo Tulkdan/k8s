@@ -7,9 +7,9 @@ data:
     pages:
       - name: Home
         columns:
-          - size: full
+          - size: small
             widgets:
-              - type: hacker-news
+              - type: calendar
 
               - type: rss
                 limit: 10
@@ -20,6 +20,20 @@ data:
                   - url: https://buttondown.email/cassidoo/rss
                   - url: https://github.com/readme.rss
                   - url: https://kerkour.com/feed.xml
+            
+          - size: full
+            widgets:
+              - type: search
+                search-engine: duckduckgo
+                bangs:
+                  - title: Youtube
+                    shortcut: "!yt"
+                    url: https://www.youtube.com/results?search_query={QUERY}
+                  - title: Nix Packages
+                    shortcut: "!np"
+                    url: https://search.nixos.org/packages?type=packages&channel=unstable&query={QUERY}
+
+              - type: hacker-news
 
               - type: reddit
                 subreddit: selfhosted
@@ -29,7 +43,14 @@ data:
               - type: weather
                 location: Campinas, Brazil
 
-              - type: calendar
+              - type: monitor
+                cache: 1m
+                title: Services
+                sites:
+                  - title: Wakapi
+                    url: http://192.168.0.13:31115
+                  - title: Soft Git Server
+                    url: http://192.168.0.13:23232
 
     theme:
       background-color: 50 1 6
@@ -54,7 +75,6 @@ spec:
       containers:
         - name: glance
           image: glanceapp/glance
-          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: glance-port
@@ -63,6 +83,7 @@ spec:
             - mountPath: /app/glance.yml
               name: glance-config
               subPath: glance.yml
+          imagePullPolicy: IfNotPresent
       volumes:
         - name: glance-config
           configMap:
@@ -83,3 +104,4 @@ spec:
   ports:
     - name: glance-port
       port: 8080
+      nodePort: 31111
