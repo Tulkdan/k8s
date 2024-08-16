@@ -49,8 +49,8 @@ data:
                 sites:
                   - title: Wakapi
                     url: http://192.168.0.13:31115
-                  - title: Soft Git Server
-                    url: http://192.168.0.13:23232
+                  - title: Paisa
+                    url: http://192.168.0.13:31112
 
     theme:
       background-color: 50 1 6
