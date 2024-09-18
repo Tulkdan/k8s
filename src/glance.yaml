@@ -20,6 +20,8 @@ data:
                   - url: https://buttondown.email/cassidoo/rss
                   - url: https://github.com/readme.rss
                   - url: https://kerkour.com/feed.xml
+                  - url: https://blog.pico.sh/rss
+                  - url: https://www.citationneeded.news/rss/
             
           - size: full
             widgets:
@@ -35,8 +37,21 @@ data:
 
               - type: hacker-news
 
-              - type: reddit
-                subreddit: selfhosted
+              - type: lobsters
+                sort-by: hot
+                tags:
+                  - go
+                  - security
+                  - linux
+                  - vim
+                  - testing
+                  - rust
+                  - debugging
+                  - performance
+                  - release
+                  - databases
+                  - nix
+                  - javascript
 
           - size: small
             widgets:
@@ -51,6 +66,27 @@ data:
                     url: http://192.168.0.13:31115
                   - title: Paisa
                     url: http://192.168.0.13:31112
+                  - title: Adguard Home
+                    url: http://192.168.0.13:150
+
+      - name: Reddit
+        columns:
+          - size: full
+            widgets:
+              - type: reddit
+                subreddit: selfhosted
+
+              - type: reddit
+                subreddit: unixporn
+
+          - size: full
+            widgets:
+              - type: reddit
+                subreddit: programming
+
+              - type: reddit
+                subreddit: linuxmemes
+                show-thumbnails: true
 
     theme:
       background-color: 50 1 6
