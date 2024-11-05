@@ -22,6 +22,9 @@ data:
                   - url: https://kerkour.com/feed.xml
                   - url: https://blog.pico.sh/rss
                   - url: https://www.citationneeded.news/rss/
+                  - url: https://zapier.com/engine/rss/42968/thoughtbot-giant
+                  - url: https://www.ntietz.com/atom.xml
+                  - url: https://jvns.ca/atom.xml
             
           - size: full
             widgets:
